@@ -1,0 +1,64 @@
+# load twitter library - the rtweet library is recommended now over twitteR
+library(rtweet)
+# plotting and pipes - tidyverse!
+library(ggplot2)
+library(dplyr)
+# text mining library
+library(tidytext)
+
+# create token named "twitter_token"
+twitter_token <- create_token(
+  app = ,
+  consumer_key = ,
+  consumer_secret = ,
+  access_token = ,
+  access_secret = )
+
+rstats_tweets <- search_tweets(q = "#rstats",
+                               n = 20000)
+
+black <- search_tweets(q = "#blackfriday walmart",
+                               n = 20000)
+
+cyber <- search_tweets(q = "#cybermonday walmart",
+                               n = 20000)
+
+b = as.data.frame(rstats_tweets)
+
+c = b[ , list(hashtags = unlist( strsplit( hashtags, "," ) ) ) , by = status_id ]
+
+d1 = expand(b, colnames=c("hashtags"), keepEmptyRows=TRUE)
+
+x<-c(10,15)
+y<-c(20,33)
+ z<-c(4,8)
+ a<-data.frame(x,y,z)
+ 
+ cyber <- search_tweets(q = "#cybermonday walmart",
+                        n = 10000)
+ 
+ black <- search_tweets(q = "#blackfriday walmart",
+       
+                                         n = 7500)
+ 
+ library(tidyr)
+ c = cyber
+ cc = unnest(c,hashtags)
+ 
+ 
+ fin = rbind(black,cyber)
+ 
+ fin2 = unnest(fin,hashtags)
+ 
+ cc = as.data.frame(cc)
+ 
+ 
+ write.csv(fin2,'fin.csv')
+ 
+ fin$ID <- seq.int(nrow(fin))
+ 
+ 
+ 
+ 
+ 
+ 

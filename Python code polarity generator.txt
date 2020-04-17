@@ -1,0 +1,51 @@
+#import os
+import pandas as pd
+#import itertools
+#import collections
+
+tweets = pd.read_csv("fin.csv", encoding='iso-8859-1')
+t2 = pd.read_csv("cc.csv")
+
+tweets = tweets.append(t2, ignore_index=True)
+tweets =tweets.drop_duplicates()
+import nltk
+from nltk.corpus import stopwords
+import re
+import networkx
+from textblob import TextBlob
+
+import warnings
+warnings.filterwarnings("ignore")
+
+
+def remove_url(txt):
+    """Replace URLs found in a text string with nothing 
+    (i.e. it will remove the URL from the string).
+
+    Parameters
+    ----------
+    txt : string
+        A text string that you want to parse and remove urls.
+
+    Returns
+    -------
+    The same txt string with url's removed.
+    """
+
+    return " ".join(re.sub("([^0-9A-Za-z \t])|(\w+:\/\/\S+)", "", txt).split())
+
+# Remove URLs
+tweets['tweets_no_urls'] = [remove_url(tweet) for tweet in tweets['text']]
+
+sentiment_objects = [TextBlob(tweet) for tweet in tweets['tweets_no_urls']]
+
+sentiment_objects[0].polarity, sentiment_objects[0]
+
+# Create list of polarity valuesx and tweet text
+tweets['sentiment_values'] = [tweet.polarity for tweet in sentiment_objects]
+
+a= tweets['Status Text'].str.extractall(r'(\#\w+)')[0]                     
+                     
+a.to_csv("cc.csv",index=False)
+         
+tweets.to_csv('pyo.csv',index=False)
